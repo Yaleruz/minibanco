@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;  // ← CORREGIR ESTA LÍNEA
 use App\Models\Cuenta;
-use App\Models\Cliente;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
 class SoapController extends Controller
 {
     /**
      * Manejar solicitudes SOAP simples
      */
-    public function handle(Request $request)
+    public function handle(Request $request)  // ← Ahora usa el Request correcto
     {
         $action = $request->get('action');
         $cuentaId = $request->get('cuenta_id');

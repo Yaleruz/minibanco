@@ -37,7 +37,7 @@ class Cuenta extends Model
      */
     public function cliente()
     {
-        return $this->belongsTo(\App\Models\Cliente::class, 'identificacion', 'id');
+        return $this->belongsTo(\App\Models\Cliente::class, 'identificacion');
     }
     
     /**
@@ -45,7 +45,7 @@ class Cuenta extends Model
      */
     public function tipoCuenta()
     {
-        return $this->belongsTo(\App\Models\TipoCuenta::class, 'tipo_cuenta', 'id');
+        return $this->belongsTo(\App\Models\TipoCuenta::class, 'tipo_cuenta');
     }
     
 }

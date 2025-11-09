@@ -18,9 +18,8 @@ Route::post('/retiros', [RetiroController::class, 'retirar'])->name('retiros.ret
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
 // ==================================================
-// RUTAS API TEMPORALES - PARA PRUEBAS
+// RUTAS API - SOLO GET (EVITA CSRF)
 // ==================================================
 
 Route::prefix('api')->group(function () {
@@ -33,10 +32,7 @@ Route::prefix('api')->group(function () {
         ]);
     });
 
-    // Servicio SOAP
-    Route::post('/soap', [App\Http\Controllers\SoapController::class, 'handle']);
-    
-    // Ruta adicional para probar con datos reales
+    // Listar cuentas
     Route::get('/cuentas', function () {
         $cuentas = App\Models\Cuenta::with('cliente', 'tipoCuenta')->get();
         return response()->json([
@@ -45,6 +41,37 @@ Route::prefix('api')->group(function () {
             'count' => $cuentas->count()
         ]);
     });
+
+    // Servicio SOAP - SOLO GET
+    Route::get('/soap', function () {
+        $request = request();
+        $soapController = new App\Http\Controllers\SoapController();
+        return $soapController->handle($request);
+    });
+
+    // Ruta específica para consultar saldo
+    Route::get('/soap/consultar/{cuenta_id}', function ($cuentaId) {
+        $soapController = new App\Http\Controllers\SoapController();
+        
+        // Crear request manualmente
+        $request = new Illuminate\Http\Request();
+        $request->replace(['action' => 'consultar_saldo', 'cuenta_id' => $cuentaId]);
+        
+        return $soapController->handle($request);
+    });
+
+    // Ruta específica para retiros
+    Route::get('/soap/retirar/{cuenta_id}/{monto}', function ($cuentaId, $monto) {
+        $soapController = new App\Http\Controllers\SoapController();
+        
+        // Crear request manualmente
+        $request = new Illuminate\Http\Request();
+        $request->replace([
+            'action' => 'realizar_retiro', 
+            'cuenta_id' => $cuentaId,
+            'monto' => $monto
+        ]);
+        
+        return $soapController->handle($request);
+    });
 });
-
-

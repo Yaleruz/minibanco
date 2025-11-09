@@ -34,7 +34,7 @@ class TipoCuenta extends Model
      */
     public function cuentas()
     {
-        return $this->hasMany(\App\Models\Cuenta::class, 'id', 'tipo_cuenta');
+        return $this->hasMany(\App\Models\Cuenta::class, 'tipo_cuenta');
     }
     
 }

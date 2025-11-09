@@ -40,7 +40,7 @@ class Cliente extends Model
      */
     public function cuentas()
     {
-        return $this->hasMany(\App\Models\Cuenta::class, 'id', 'identificacion');
+        return $this->hasMany(\App\Models\Cuenta::class, 'identificacion');
     }
     
  
