@@ -17,3 +17,34 @@ Route::get('/retiros', [RetiroController::class, 'index'])->name('retiros.index'
 Route::post('/retiros', [RetiroController::class, 'retirar'])->name('retiros.retirar');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// ==================================================
+// RUTAS API TEMPORALES - PARA PRUEBAS
+// ==================================================
+
+Route::prefix('api')->group(function () {
+    // Ruta de prueba
+    Route::get('/test', function () {
+        return response()->json([
+            'success' => true,
+            'message' => 'API del Minibanco funcionando! 🚀',
+            'timestamp' => now()->format('Y-m-d H:i:s')
+        ]);
+    });
+
+    // Servicio SOAP
+    Route::post('/soap', [App\Http\Controllers\SoapController::class, 'handle']);
+    
+    // Ruta adicional para probar con datos reales
+    Route::get('/cuentas', function () {
+        $cuentas = App\Models\Cuenta::with('cliente', 'tipoCuenta')->get();
+        return response()->json([
+            'success' => true,
+            'data' => $cuentas,
+            'count' => $cuentas->count()
+        ]);
+    });
+});
+
+
