@@ -19,12 +19,12 @@ class TransaccionService
         throw new \Exception('Cuenta no encontrada');
     }
 
-    // Validar fondos suficientes - ✅ Usar saldo_cuenta
+    // Validar fondos suficientes 
     if ($cuenta->saldo_cuenta < $monto) {
         throw new \Exception('Fondos insuficientes');
     }
 
-    // Actualizar saldo - ✅ Usar saldo_cuenta
+    // Actualizar saldo 
     $cuenta->saldo_cuenta -= $monto;
     $cuenta->save();
 
@@ -32,7 +32,7 @@ class TransaccionService
         'success' => true,
         'cuenta_id' => $cuenta->id,
         'monto_retirado' => $monto,
-        'nuevo_saldo' => $cuenta->saldo_cuenta, // ✅ Usar saldo_cuenta
+        'nuevo_saldo' => $cuenta->saldo_cuenta, 
         'fecha' => now()->format('Y-m-d H:i:s')
     ];
 }

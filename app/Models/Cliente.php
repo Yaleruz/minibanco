@@ -32,7 +32,7 @@ class Cliente extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['identificacion_cliente', 'Nombres', 'apellidos'];
+    protected $fillable = ['id','identificacion_cliente', 'Nombres', 'apellidos'];
 
 
     /**
@@ -40,7 +40,7 @@ class Cliente extends Model
      */
     public function cuentas()
     {
-        return $this->hasMany(\App\Models\Cuenta::class, 'identificacion');
+        return $this->hasMany(\App\Models\Cuenta::class, 'identificacion','id');
     }
     
  

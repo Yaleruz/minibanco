@@ -75,3 +75,23 @@ Route::prefix('api')->group(function () {
         return $soapController->handle($request);
     });
 });
+
+// Ruta de diagnóstico
+Route::get('/api/debug-cuenta/{id}', function ($id) {
+    $cuenta = App\Models\Cuenta::find($id);
+    
+    return response()->json([
+        'cuenta' => $cuenta,
+        'cliente' => $cuenta->cliente,
+        'tipo_cuenta' => $cuenta->tipoCuenta,
+        'cliente_id' => $cuenta->identificacion,
+        'tipo_cuenta_id' => $cuenta->tipo_cuenta
+    ]);
+});
+
+// Ruta alternativa para probar el servicio
+
+Route::get('/api/soap-test-fixed', function () {
+    $transaccionService = new App\Services\TransaccionService();
+    return $transaccionService->consultarSaldo(1);
+});
