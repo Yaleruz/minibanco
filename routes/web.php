@@ -7,6 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Auth::routes();
 
 Route::resource('cuentas', App\Http\Controllers\CuentaController::class);
@@ -18,9 +20,7 @@ Route::post('/retiros', [RetiroController::class, 'retirar'])->name('retiros.ret
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// ==================================================
-// RUTAS API - SOLO GET (EVITA CSRF)
-// ==================================================
+
 
 Route::prefix('api')->group(function () {
     // Ruta de prueba
